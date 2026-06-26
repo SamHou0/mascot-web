@@ -1,0 +1,29 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "SorakadoAO.moc3",
+		"Textures": [
+			"SorakadoAO.4096/texture_00.png"
+		],
+		"Physics": "SorakadoAO.physics3.json",
+		"DisplayInfo": "SorakadoAO.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamMouthForm",
+				"ParamMouthOpenY"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	]
+}

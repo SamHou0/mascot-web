@@ -12,7 +12,6 @@ export interface AvatarArrayBuffers {
 	moc3: ArrayBuffer;
 	textures: Blob[];
 	physics: ArrayBuffer;
-	expressions: [string, ArrayBuffer][];
 	motions: [string, ArrayBuffer][];
 }
 
@@ -75,8 +74,7 @@ export class Live2dRenderer {
 			moc3: moc3ArrayBuffer,
 			textures,
 			physics: physics3ArrayBuffer,
-			expressions,
-			motions,
+			motions
 		} = buffers;
 
 		/**
@@ -119,11 +117,6 @@ export class Live2dRenderer {
 
 		// 物理演算設定
 		this.model.loadPhysics(physics3ArrayBuffer, physics3ArrayBuffer.byteLength);
-
-		// 表情
-		for (const [k, v] of expressions) {
-			this.model.addExpression(v, k);
-		}
 
 		// モーション
 		for (const [k, v] of motions) {
@@ -226,16 +219,16 @@ export class Live2dRenderer {
 		});
 		loop();
 
-		const randomMotions = ['akubi', 'akubi', 'swing', 'AiArt'];
-		const randomMotion = () => {
+		const randomMotions = ['breath', 'emo1', 'emo2'];
+		const breathMotion = () => {
 			setTimeout(() => {
 				if (this.model.isMotionFinished) {
-					this.model.startMotionByName(randomMotions[Math.floor(Math.random() * randomMotions.length)]);
+					this.model.startMotionByName('breath');
 				}
-				randomMotion();
-			}, (1000 * 10) + (Math.random() * 1000 * 80));
+				breathMotion();
+			});
 		};
-		randomMotion();
+		breathMotion();
 
 		const mimi = () => {
 			setTimeout(() => {
@@ -259,11 +252,11 @@ export class Live2dRenderer {
 
 		// NOTE: なんかbody->head, head->boobになってるっぽい
 		if (this.model.isHit(CubismFramework.getIdManager().getId('HitArea'), x, y)) { // 右耳
-			this.model.startMotionByName('mimi');
+			this.model.startMotionByName('emo2');
 		} else if (this.model.isHit(CubismFramework.getIdManager().getId('HitArea2'), x, y)) { // 左耳
-			this.model.startMotionByName('mimi');
+			this.model.startMotionByName('emo1');
 		} else if (this.model.isHit(CubismFramework.getIdManager().getId('HitArea_Body'), x, y)) { // 頭
-			this.model.startMotionByName('mimi');
+			this.model.startMotionByName('emo2');
 			//this.model.startExpressionByName('smile');
 		} else if (this.model.isHit(CubismFramework.getIdManager().getId('HitArea_Head'), x, y)) { // 胸
 			//this.model.startExpressionByName('jitome');

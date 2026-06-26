@@ -4,26 +4,18 @@ import { getAngle, getDistance } from './math-util';
 
 const CUBISM_CORE_URL = 'https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js';
 
-const MODEL_PATH = './misskey/live2d/ai/web/';
+const MODEL_PATH = './SorakadoAO/';
 const MODEL_FILES = {
-	moc3: MODEL_PATH + 'ai.moc3',
-	model3: MODEL_PATH + 'ai.model3.json',
-	physics3: MODEL_PATH + 'ai.physics3.json',
+	moc3: MODEL_PATH + 'SorakadoAO.moc3',
+	model3: MODEL_PATH + 'SorakadoAO.model3.json',
+	physics3: MODEL_PATH + 'SorakadoAO.physics3.json',
 	textures: [
-		MODEL_PATH + 'ai.4096/texture_00.png',
+		MODEL_PATH + 'SorakadoAO.4096/texture_00.png',
 	],
-	expressions: {
-		smile: MODEL_PATH + 'expressions/exp_01.exp3.json',
-		surprise: MODEL_PATH + 'expressions/exp_02.exp3.json',
-		happy: MODEL_PATH + 'expressions/exp_06.exp3.json',
-		jitome: MODEL_PATH + 'expressions/exp_11.exp3.json',
-		gurugurume: MODEL_PATH + 'expressions/exp_20.exp3.json',
-	},
 	motions: {
-		swing: MODEL_PATH + 'motions/mtn_03.motion3.json',
-		akubi: MODEL_PATH + 'motions/mtn_04.motion3.json',
-		mimi: MODEL_PATH + 'motions/mtn_05.motion3.json',
-		AiArt: MODEL_PATH + 'motions/AiArt.motion3.json',
+		breath: MODEL_PATH + 'motions/Breath.motion3.json',
+		emo1: MODEL_PATH + 'motions/Emo1.motion3.json',
+		emo2: MODEL_PATH + 'motions/Emo2.motion3.json'
 	},
 };
 
@@ -60,15 +52,13 @@ export function load(canvas: HTMLCanvasElement, options: { x: number; y: number;
 
 async function main(canvas: HTMLCanvasElement, options: { x: number; y: number; scale: number; eyeX?: number; eyeY?: number; }) {
 	try {
-		const [model, moc3, physics, textures, expressions, motions] = await Promise.all([
+		const [model, moc3, physics, textures,
+			motions] = await Promise.all([
 			fetch(MODEL_FILES.model3).then(res => res.arrayBuffer()),
 			fetch(MODEL_FILES.moc3).then(res => res.arrayBuffer()),
 			fetch(MODEL_FILES.physics3).then(res => res.arrayBuffer()),
 			Promise.all(MODEL_FILES.textures.map(texture =>
 				fetch(texture).then(res => res.blob())
-			)),
-			Promise.all(Object.entries(MODEL_FILES.expressions).map(([k, v]) =>
-				fetch(v).then(res => res.arrayBuffer()).then(buffer => [k, buffer] as [string, ArrayBuffer])
 			)),
 			Promise.all(Object.entries(MODEL_FILES.motions).map(([k, v]) =>
 				fetch(v).then(res => res.arrayBuffer()).then(buffer => [k, buffer] as [string, ArrayBuffer])
@@ -79,8 +69,7 @@ async function main(canvas: HTMLCanvasElement, options: { x: number; y: number; 
 			moc3,
 			physics,
 			textures,
-			expressions,
-			motions,
+			motions
 		}, {
 			autoBlink: true,
 			...options
