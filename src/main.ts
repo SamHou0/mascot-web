@@ -10,7 +10,7 @@ import './style.css';
 	const url = new URL(window.location.href);
 
 	const renderer = await load(canvasEl, {
-		scale: parseFloat(url.searchParams.get('scale') || '1'),
+		scale: parseFloat(url.searchParams.get('scale') || '1.125'),
 		x: parseFloat(url.searchParams.get('x') || '0'),
 		y: parseFloat(url.searchParams.get('y') || '1'),
 		eyeX: parseFloat(url.searchParams.get('eyeX') || '0'),
